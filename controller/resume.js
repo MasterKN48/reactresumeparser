@@ -7,7 +7,7 @@ exports.resumeParser = async (req, res) => {
   try {
     let filePath = path.join(__dirname, "../", req.files.resume.path);
     let fileName = req.files.resume.name;
-    console.log(req.files.resume, " ==:== ", filePath);
+    console.log(filePath);
     let pdfParser = new PDFParser(this, 1);
     pdfParser.on("pdfParser_dataError", (errData) => {
       if (fs.existsSync(filePath)) {
