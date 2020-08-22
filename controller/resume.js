@@ -2,13 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const PDFParser = require("pdf2json");
 const ResumeParser = require("simple-resume-parser");
-//const jsonexport = require("jsonexport");
 
 exports.resumeParser = async (req, res) => {
   try {
     let filePath = path.join(__dirname, "../", req.files.resume.path);
     let fileName = req.files.resume.name;
-    console.log(filePath);
+    console.log(req.files.resume, " ==:== ", filePath);
     let pdfParser = new PDFParser(this, 1);
     pdfParser.on("pdfParser_dataError", (errData) => {
       if (fs.existsSync(filePath)) {
@@ -65,28 +64,6 @@ exports.resumeParser = async (req, res) => {
           experience: dt.parts.experience || null,
           projects: dt.parts.projects || null,
         };
-        // let csv = await jsonexport(
-        //   {
-        //     totalChars: chars,
-        //     totalLines: lines,
-        //     totalPages: pages.length,
-        //     fontSizes,
-        //     fonts,
-        //     name,
-        //     email,
-        //     phone,
-        //     socialMedia,
-        //   },
-        //   { rowDelimiter: "|" }
-        // );
-        // if (csv) {
-        //   fs.writeFileSync("../upload/test.csv", csv, () => {
-        //     if (fs.existsSync(filePath)) {
-        //       fs.unlink(filePath, (cb) => {});
-        //     }
-        //     return res.download("../upload/test.csv", "Resume.csv");
-        //   });
-        // }
         if (fs.existsSync(filePath)) {
           fs.unlink(filePath, (cb) => {});
         }
